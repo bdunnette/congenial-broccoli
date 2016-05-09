@@ -1,0 +1,48 @@
+
+<template name="mainLayout">
+  <head>
+    <title>simple</title>
+  </head>
+
+  <body>
+    <h1>Welcome to Meteor!</h1>
+    <main>
+      {{>Template.dynamic template=content}}
+    </main>
+  </body>
+
+</template>
+
+<template name="hello">
+  <ul>
+  {{#each transactions}}
+  <li>
+    <a href="{{pathFor 'transaction' transactionId=_id}}">{{date}}-{{total}}</a>
+  </li>
+  {{/each}}
+</ul>
+</template>
+
+<template name="transaction">
+  {{moCalendar transaction.date}}
+  {{> quickForm id="updatePushForm" type="update-pushArray" collection="Transactions" doc=transaction scope="items" fields="description,quantity,eachPrice"}}
+  <table class="table table-striped">
+    <tbody>
+  {{#each transaction.items}}
+  <tr>
+    <td>
+      {{description}}
+    </td>
+    <td>
+      {{eachPrice}}
+    </td>
+    <td>
+      {{extendedPrice}}
+    </td>
+  </tr>
+  {{/each}}
+    </tbody>
+  </table>
+
+  ${{transaction.total}}
+</template>
